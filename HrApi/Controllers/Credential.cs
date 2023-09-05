@@ -1,6 +1,6 @@
-﻿using HrApi.DTOs;
+﻿using HrApi.Attribute;
+using HrApi.DTOs;
 using HrApi.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HrApi.Controllers
@@ -18,15 +18,9 @@ namespace HrApi.Controllers
 
 
         [HttpPost("register")]
+        [ValidateModel]
         public IActionResult CreateAccount(CreateCredentialDTO newCredential)
         {
-            // data validation
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, ModelState);
-            }
-
-            // to send response to user
             object response;
 
             var employee = _context.EmployeesCredentials.Where(x => x.Email == newCredential.Email).FirstOrDefault();
@@ -57,12 +51,10 @@ namespace HrApi.Controllers
         }
 
         [HttpPost("login")]
+        [ValidateModel]
         public IActionResult VerifyAccount(LoginDTO loginCredential)
         {
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, ModelState);
-            }
+            
 
             object response;
 
@@ -95,13 +87,11 @@ namespace HrApi.Controllers
         }
 
         [HttpPut("employees/{id}/resetpassword")]
+        [ValidateModel]
         public IActionResult ResetPassword(int id, ResetPasswordDTO resetPasswordDTO)
         {
 
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, ModelState);
-            }
+            
 
             object response;
 

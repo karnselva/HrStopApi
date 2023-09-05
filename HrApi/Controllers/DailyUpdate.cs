@@ -1,6 +1,6 @@
-﻿using HrApi.Calculations;
+﻿using HrApi.Attribute;
+using HrApi.Calculations;
 using HrApi.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace HrApi.Controllers
@@ -18,6 +18,7 @@ namespace HrApi.Controllers
         }
 
         [HttpGet("next-day")]
+        [ValidateModel]
         public IActionResult NextDayIn()
         {
 

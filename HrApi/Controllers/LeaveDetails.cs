@@ -1,9 +1,9 @@
 ﻿using HrApi.DTOs;
 using HrApi.Models;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using HrApi.Calculations;
 using Microsoft.EntityFrameworkCore;
+using HrApi.Attribute;
 
 namespace HrApi.Controllers
 {
@@ -19,6 +19,7 @@ namespace HrApi.Controllers
         }
 
         [HttpPost("employees/{id}/request-leave")]
+        [ValidateModel]
         public IActionResult RequestLeave(int id, CreateLeaveRequestDTO leaveRequestDTO)
         {
 
@@ -90,6 +91,7 @@ namespace HrApi.Controllers
         }
 
         [HttpGet("manager/{id}/employees/leave-requests")]
+        [ValidateModel]
         public IActionResult LeavesRequests(int id)
         {
             object response;
@@ -151,6 +153,7 @@ namespace HrApi.Controllers
         }
 
         [HttpGet("employees/{id}/check-leaves-status")]
+        [ValidateModel]
         public IActionResult CheckLeaveStatus(int id)
         {
             var leaverequests = _context.LeaveRequests.Where(x => x.EmployeeId == id).Include(x => x.Employee).Include(x => x.Leave).ToList();

@@ -1,8 +1,8 @@
 ﻿using HrApi.DTOs;
 using HrApi.Models;
 using HrApi.QueryParameters;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
+using HrApi.Attribute;
 
 namespace HrApi.Controllers
 {
@@ -18,13 +18,9 @@ namespace HrApi.Controllers
         }
 
         [HttpPost("admins/{id}/create-employee")]
+        [ValidateModel]
         public IActionResult CreateEmployee(int id, CreateEmployeeDetailsAdminDTO employeeDetailsAdminDTO)
         {
-            if (!ModelState.IsValid)
-            {
-
-                return StatusCode(StatusCodes.Status400BadRequest, ModelState);
-            }
 
             object response;
 
@@ -68,6 +64,7 @@ namespace HrApi.Controllers
         }
 
         [HttpGet("employee-admin-details/employees/{id}")]
+        [ValidateModel]
         public IActionResult GetEmployeeAdminDetails(int employeeId)
         {
             object response;
@@ -88,6 +85,7 @@ namespace HrApi.Controllers
 
 
         [HttpGet("/search-employees")]
+        [ValidateModel]
         public IActionResult SearchEmployees([FromQuery] SearchEmployeeQueryParameters parameters)
         {
             object response;
@@ -99,13 +97,10 @@ namespace HrApi.Controllers
         }
 
         [HttpDelete("admins/{adminId}/employees/{employeeId}/delete-employee-account")]
+        [ValidateModel]
         public IActionResult DeleteAccount(int adminId, int employeeId)
         {
 
-            if (!ModelState.IsValid)
-            {
-                return StatusCode(StatusCodes.Status400BadRequest, ModelState);
-            }
             object response;
 
 
@@ -148,13 +143,10 @@ namespace HrApi.Controllers
         }
 
         [HttpPost("employees/{id}/family-detail")]
+        [ValidateModel]
         public IActionResult CreateFamily(int id, CreateFamilyDTO family)
         {
-            if (!ModelState.IsValid)
-            {
-
-                return StatusCode(StatusCodes.Status400BadRequest, ModelState);
-            }
+           
             object response;
 
             FamiliesDetail familiesDetail = new()

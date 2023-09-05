@@ -1,9 +1,6 @@
-﻿using HrApi.DTOs;
-using HrApi.Models;
-using HrApi.Calculations;
-using Microsoft.AspNetCore.Http;
+﻿using HrApi.Models;
 using Microsoft.AspNetCore.Mvc;
-using System.Linq;
+
 
 namespace HrApi.Controllers
 {
