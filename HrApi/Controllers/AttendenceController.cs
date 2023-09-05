@@ -1,4 +1,6 @@
-﻿using HrApi.Models;
+﻿
+using HrApi.Models;
+
 using Microsoft.AspNetCore.Mvc;
 
 

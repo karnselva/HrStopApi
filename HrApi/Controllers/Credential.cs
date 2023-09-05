@@ -10,10 +10,11 @@ namespace HrApi.Controllers
     public class Credential : ControllerBase
     {
         private readonly HrApiContext _context;
-
-        public Credential(HrApiContext context)
+        private readonly IMapper _mapper;
+        public Credential(HrApiContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
 
@@ -30,22 +31,14 @@ namespace HrApi.Controllers
                 response = new { Message = "Email already is Exists , Create new one" };
                 return StatusCode(StatusCodes.Status409Conflict, response);
             }
-            else
-            {
-
-                EmployeesCredential employeesCredential = new()
-                {
-                    Email = newCredential.Email,
-                    Password = newCredential.Password,
-                    EmployeeId = newCredential.EmployeeId
-                };
-
+            
+                EmployeesCredential employeesCredential = _mapper.Map<EmployeesCredential>(newCredential);
                 _context.EmployeesCredentials.Add(employeesCredential);
                 _context.SaveChanges();
 
                 response = new { Message = "Credential Added Successfully" };
                 return StatusCode(StatusCodes.Status201Created, response);
-            }
+          
 
 
         }

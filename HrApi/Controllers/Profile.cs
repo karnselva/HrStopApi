@@ -11,10 +11,12 @@ namespace HrApi.Controllers
     public class Profile : ControllerBase
     {
         private readonly HrApiContext _context;
+        private readonly IMapper _mapper;
 
-        public Profile(HrApiContext context)
+        public Profile(HrApiContext context, IMapper mapper)
         {
             _context = context;
+            _mapper = mapper;
         }
 
         [HttpPost("admins/{id}/create-employee")]
@@ -30,17 +32,7 @@ namespace HrApi.Controllers
             {
                 if (employee.IsAdmin == true)
                 {
-                    EmployeesDetailsAdmin employeesDetailsAdmin = new()
-                    {
-
-                        EmployeeName = employeeDetailsAdminDTO.EmployeeName,
-                        Code = employeeDetailsAdminDTO.Code,
-                        DateOfJoin = employeeDetailsAdminDTO.DateOfJoin.Date,
-                        ServiceStatus = employeeDetailsAdminDTO.ServiceStatus,
-                        ReportManagerId = employeeDetailsAdminDTO.ReportManagerId,
-                        Role = employeeDetailsAdminDTO.Role
-                    };
-
+                    EmployeesDetailsAdmin employeesDetailsAdmin = _mapper.Map<EmployeesDetailsAdmin>(employeeDetailsAdminDTO);
                     _context.EmployeesDetailsAdmins.Add(employeesDetailsAdmin);
                     _context.SaveChanges();
 
@@ -148,15 +140,7 @@ namespace HrApi.Controllers
         {
            
             object response;
-
-            FamiliesDetail familiesDetail = new()
-            {
-                Name = family.Name,
-                Gender = family.Gender,
-                Relationship = family.Relationship,
-                Address = family.Address,
-                PhoneNumber = family.PhoneNumber,
-            };
+            FamiliesDetail familiesDetail = _mapper.Map<FamiliesDetail>(family);
 
             _context.Add(familiesDetail);
             _context.SaveChanges();

@@ -1,4 +1,5 @@
 global using System.Text.Json.Serialization;
+global using AutoMapper;
 using HrApi.Middlewares;
 using HrApi.Models;
 using Microsoft.EntityFrameworkCore;
@@ -17,7 +18,8 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddDbContext<HrApiContext>(options =>
 options.UseSqlServer(builder.Configuration.GetConnectionString("HrApiDb")));
 
-
+//automapper
+builder.Services.AddAutoMapper(typeof(Program).Assembly);
 
 var app = builder.Build();
 
